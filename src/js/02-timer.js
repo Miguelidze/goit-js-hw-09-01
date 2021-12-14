@@ -12,10 +12,12 @@ const options = {
       refs.startBtn.setAttribute('disabled', true);
       window.alert('Please choose a date in the future');
     }
-
-    refs.startBtn.removeAttribute('disabled');
-    refs.inputData.setAttribute('disabled', true);
-    refs.startBtn.addEventListener('click', () => {
+    if (selectedDates[0] > Date.now()) {
+      refs.startBtn.removeAttribute('disabled', true);
+      refs.inputData.setAttribute('disabled', true);
+    }
+   
+      refs.startBtn.addEventListener('click', () => {
       function timer() {
         let currentData = new Date();
         const dataTime = selectedDates[0] - currentData;
@@ -26,9 +28,12 @@ const options = {
         console.log(time);
         updateClockFace(time);
       }
+      refs.startBtn.setAttribute('disabled', true);
       setInterval(timer, 1000);
-    });
+      });
+    
   },
+  
 };
 
 flatpickr('#datetime-picker', options);
